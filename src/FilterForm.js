@@ -18,7 +18,6 @@ class FilterForm extends Component {
         console.log(`FilterForm.js handleSubmit()`);
         this.props.onSubmit(title);
 
-
     }
 	render() {
 		return (

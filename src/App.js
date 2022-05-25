@@ -78,10 +78,19 @@ class App extends Component {
 	};
 
     onDelete = async (deletedBook) => {
-      console.log(`App.js onDelete()`);
-      let URL = `http://localhost:3001/books${deletedBook._id}`
-      axios.delete(URL);
-      
+      console.log(`App.js onDelete() book to be deleted: ${JSON.stringify(deletedBook)}`);
+      let URL = `http://localhost:3001/books/${deletedBook._id}`;
+      await axios.delete(URL, deletedBook._id)
+        .then((res) => {
+          console.log(`server response from DELETE: ${res}`);
+          const filteredBooks = this.state.books.filter((book) => {
+            return book._id !== deletedBook;
+          });
+          this.setState({books: filteredBooks});
+        }).catch((err) => {
+          console.error(`ERROR from DELETE: ${err}`);
+        });
+
     }
 	render() {
 		return (
@@ -95,7 +104,7 @@ class App extends Component {
 						<Route
 							exact
 							path="/"
-							element={<FilterForm onSubmit={this.onSubmit} />}
+							element={<FilterForm onSubmit={this.onSubmit}/>}
 						/>
 						<Route
 							exact
@@ -107,8 +116,8 @@ class App extends Component {
 				{this.state.books.length && (
 					<BookList
 						books={this.state.books}
-						onDelete={this.handleDelete}
-						onUpdate={this.handleUpdate}
+						onDelete={this.onDelete}
+						onUpdate={this.onUpdate}
 					/>
 				)}
 			</>

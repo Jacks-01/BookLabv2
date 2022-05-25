@@ -14,7 +14,7 @@ class Book extends Component {
 	delete = (evt) => {
 		evt.preventDefault();
 		console.log(`Book.js delete()`);
-		this.props.handleDelete();
+		this.props.handleDelete(this.props.book);
 	};
 
     /**
