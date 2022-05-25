@@ -26,7 +26,9 @@ class Book extends Component {
                 {this.props.books.length &&
                 this.props.books.map((book, index)=>{
                     <div key={index}>
-                        {book}
+                        <h2>{book.title}</h2>
+                        <p>{book.author}</p>
+                        <p>{book.summary}</p>
                         <button onClick={this.delete}>Delete</button>
                         <button onClick={this.update}>Update</button>
                     </div>
