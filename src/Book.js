@@ -6,12 +6,22 @@
 import React, { Component } from 'react';
 
 class Book extends Component {
+    /**
+     * 
+     * @param {boolean} evt - value when the button is pressed.
+     * @returns - sends props.handleDelete for a book to BookList.js
+     */
 	delete = (evt) => {
 		evt.preventDefault();
 		console.log(`Book.js delete()`);
-		this.props.handleDelete();
+		this.props.handleDelete(this.props.book);
 	};
 
+    /**
+     * 
+     * @param {boolean} evt value when the button is pressed.
+     * @returns - sends props.handleUpdate for a book to BookList.js
+     */
 	update = (evt) => {
 		evt.preventDefault();
 		console.log(`Book.js update()`);
