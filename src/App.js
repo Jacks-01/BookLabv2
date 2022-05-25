@@ -19,16 +19,19 @@ class App extends Component {
     this.grabBooks();
   }
 
-  grabBooks = () => {
+  grabBooks = async () => {
+    console.log(process.env.API_URL);
     axios({
       method: 'get',
-      url: process.env.URL_API,
-      params: null,
-
+      url: `http://localhost:3001/books`,
+      params: {
+    
+      }
     })
     .then((res) => {
       console.log(`master data for all books: ${res.data}`)
       this.setState({books: res.data})
+      console.log(`this.state.books: ${this.state.books}`);
     }).catch((err) => {
       console.error(`ERROR in GET ${err}`);
     });
