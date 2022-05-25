@@ -22,6 +22,11 @@ class App extends Component {
     this.grabBooks();
   }
 
+  /**
+   * @description makes the API call to the back-end to retrieve all books when page loads if there is not a value for a book title.
+   * 
+   * @conditional querys a book from the DB by title.
+   */
   grabBooks = async () => {
     // console.log(process.env.API_URL);
     let URL = 'http://localhost:3001/books';
@@ -44,6 +49,12 @@ class App extends Component {
       console.error(`ERROR in GET ${err}`);
     });
   }
+
+  /**
+   * 
+   * @param {string} title - value from the form that is submitted
+   * @returns - sets the state of title, then calls the API again to search for the given book.
+   */
   onSubmit = (title) => {
     console.log(`app.js onSubmit()`);
     this.setState({title: title}, this.grabBooks);

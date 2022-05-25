@@ -7,6 +7,11 @@ import { Form, Button } from 'react-bootstrap';
 
 class FilterForm extends Component {
 
+    /**
+     * 
+     * @param {string} evt - string value of the form when submitted
+     * @returns - sends string(title) to App.js
+     */
     handleSubmit = (evt) => {
         evt.preventDefault();
         let title = evt.target.formTitle.value
