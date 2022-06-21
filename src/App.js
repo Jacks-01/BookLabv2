@@ -10,12 +10,14 @@ import BookList from './BookList';
 import FilterForm from './FilterForm';
 import CreateBook from './CreateBook';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import UpdateModal from './UpdateModal';
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			books: [],
 			title: '',
+			show: false,
 		};
 	}
 
@@ -89,9 +91,29 @@ class App extends Component {
           this.setState({books: filteredBooks});
         }).catch((err) => {
           console.error(`ERROR from DELETE: ${err}`);
-        });
-
+        });	
     }
+
+	onUpdate = async (updatedBook) => {
+		console.log(`App.js onUpdate(), book to be updated ${JSON.stringify(updatedBook)}`);
+		let URL = `http://localhost:3001/books/${updatedBook._id}`
+
+		await axios.delete(URL, updatedBook._id)
+		.then((res) => {
+			console.log(`server response from UPDATE ${res}`)
+		}).catch((err) => {
+			console.error(`Error from UPDATE ${err}`)
+		});
+	};
+
+	updateForm = async (updatedBook) => {
+		this.setState({show: true});
+		this.onUpdate(updatedBook);
+	};
+
+	handleClose = () => {
+		this.setState({show: false});
+	}
 	render() {
 		return (
 			<>
@@ -117,9 +139,10 @@ class App extends Component {
 					<BookList
 						books={this.state.books}
 						onDelete={this.onDelete}
-						onUpdate={this.onUpdate}
+						onUpdate={this.updateForm}
 					/>
 				)}
+				<UpdateModal onUpdate={this.updateForm} handleClose={this.handleClose} show={this.state.show}/>
 			</>
 		);
 	}
