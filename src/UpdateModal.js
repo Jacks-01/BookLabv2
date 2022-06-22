@@ -29,11 +29,9 @@ class UpdateModal extends Component {
 		<>
 			<Modal
 				show={this.props.show}
-				onhide={this.props.handleClose}
-				backdrop="static"
-				keyboard="false"
+				onHide={this.props.handleClose}
 			>
-				<Modal.Header closeButton>
+			<Modal.Header closeButton>
 					<Modal.Title>Update a book</Modal.Title>
 				</Modal.Header>
 				<Form onSubmit={this.handleSubmit}>

@@ -6,6 +6,12 @@
 import React, { Component } from 'react';
 
 class Book extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			show: false,
+		}
+	}
     /**
      * 
      * @param {boolean} evt - value when the button is pressed.
@@ -25,7 +31,7 @@ class Book extends Component {
 	update = (evt) => {
 		evt.preventDefault();
 		console.log(`Book.js update()`);
-		this.props.handleUpdate();
+		this.props.handleUpdate(this.props.book);
 	};
 
 	render() {
