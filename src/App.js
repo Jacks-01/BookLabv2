@@ -10,12 +10,15 @@ import BookList from './BookList';
 import FilterForm from './FilterForm';
 import CreateBook from './CreateBook';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import UpdateModal from './UpdateModal';
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			books: [],
 			title: '',
+			show: false,
+			bookToBeUpdated: {}
 		};
 	}
 
@@ -34,16 +37,16 @@ class App extends Component {
 		if (this.state.title !== '') {
 			URL += `?title=${this.state.title}`;
 		}
-		console.log(URL);
+		// console.log(URL);
 		axios({
 			method: 'get',
 			url: URL,
 			params: {},
 		})
 			.then((res) => {
-				console.log(`master data for all books: ${res.data}`);
+				// console.log(`master data for all books: ${res.data}`);
 				this.setState({ books: res.data });
-				console.log(`this.state.books: ${this.state.books}`);
+				// console.log(`this.state.books: ${this.state.books}`);
 			})
 			.catch((err) => {
 				console.error(`ERROR in GET ${err}`);
@@ -55,18 +58,18 @@ class App extends Component {
 	 * @returns - sets the state of title, then calls the API again to search for the given book.
 	 */
 	onSubmit = (title) => {
-		console.log(`app.js onSubmit()`);
+		// console.log(`app.js onSubmit()`);
 		this.setState({ title: title }, this.grabBooks);
 	};
 
 	onCreate = async (newBook) => {
-		console.log(`app.js onCreate() info: ${JSON.stringify(newBook)}`);
+		// console.log(`app.js onCreate() info: ${JSON.stringify(newBook)}`);
 		let URL = 'http://localhost:3001/books';
 
 		await axios
 			.post(URL, { newBook })
 			.then((res) => {
-				console.log(`response from POST: ${JSON.stringify(res.data)}`);
+				// console.log(`response from POST: ${JSON.stringify(res.data)}`);
 				let newBook = res.data;
 				let currentBooks = this.state.books;
 				currentBooks.push(newBook);
@@ -78,20 +81,48 @@ class App extends Component {
 	};
 
     onDelete = async (deletedBook) => {
-      console.log(`App.js onDelete() book to be deleted: ${JSON.stringify(deletedBook)}`);
+    //   console.log(`App.js onDelete() book to be deleted: ${JSON.stringify(deletedBook)}`);
       let URL = `http://localhost:3001/books/${deletedBook._id}`;
       await axios.delete(URL, deletedBook._id)
         .then((res) => {
-          console.log(`server response from DELETE: ${res}`);
+        //   console.log(`server response from DELETE: ${res}`);
           const filteredBooks = this.state.books.filter((book) => {
             return book._id !== deletedBook;
           });
           this.setState({books: filteredBooks});
         }).catch((err) => {
           console.error(`ERROR from DELETE: ${err}`);
-        });
-
+        });	
     }
+
+	onUpdate = async (updatedBook) => {
+		let bookToBeUpdated = this.state.bookToBeUpdated;
+		console.log(`App.js onUpdate(), book to be updated ${JSON.stringify(bookToBeUpdated)}`);
+		console.log(`App.js onUpdate(), book after update: ${JSON.stringify(updatedBook)}`);
+		
+		let URL = `http://localhost:3001/books/${bookToBeUpdated._id}`
+
+		await axios.patch(URL, updatedBook)
+		.then((res) => {
+			console.log(`server response from UPDATE ${res.data}`)
+			this.grabBooks();
+			
+		}).catch((err) => {
+			console.error(`Error from UPDATE ${err}`)
+		});
+	};
+
+	updateForm = async (updatedBook) => {
+		console.log(`updatedBook = ${JSON.stringify(updatedBook)}`)
+		// console.log(`this is the book in updateForm() ${updatedBook}`)
+		this.setState({show: true});
+		this.setState({bookToBeUpdated: updatedBook})
+		// this.onUpdate(updatedBook);
+	};
+
+	handleClose = () => {
+		this.setState({show: false});
+	}
 	render() {
 		return (
 			<>
@@ -117,9 +148,10 @@ class App extends Component {
 					<BookList
 						books={this.state.books}
 						onDelete={this.onDelete}
-						onUpdate={this.onUpdate}
+						onUpdate={this.updateForm}
 					/>
 				)}
+				<UpdateModal onUpdate={this.onUpdate} handleClose={this.handleClose} show={this.state.show}/>
 			</>
 		);
 	}
