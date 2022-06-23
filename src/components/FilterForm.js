@@ -23,7 +23,7 @@ class FilterForm extends Component {
 		return (
 			<Form onSubmit={this.handleSubmit}>
 				<Form.Group className="mb-3" controlId="formTitle">
-					<Form.Label>Title</Form.Label>
+					<Form.Label>Enter a title to search for a book</Form.Label>
 					<Form.Control type="name" placeholder="title" />
 				</Form.Group>
                 <Button variant='primary' type='submit'>

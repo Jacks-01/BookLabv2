@@ -10,6 +10,8 @@ import FilterForm from './FilterForm';
 import CreateBook from './CreateBook';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UpdateModal from './UpdateModal';
+import Header from './Header';
+import { Container } from 'react-bootstrap';
 const SERVER = process.env.REACT_APP_HEROKU_URL;
 
 class App extends Component {
@@ -114,11 +116,15 @@ class App extends Component {
 	render() {
 		return (
 			<>
+				<Header />
 				<Router>
-					<nav>
-						<Link to="/">Home</Link>
-						<Link to="/createBook">Create</Link>
-					</nav>
+					<Container style={{display: 'flex', justifyContent: 'center'}}>
+						<nav>
+							<Link to="/" style={{padding: '20px', fontSize: '20px'}}>Home</Link>
+							<Link to="/createBook" style={{fontSize: '20px'}}>Create</Link>
+						</nav>
+					</Container>
+
 					<Routes>
 						<Route
 							exact
