@@ -11,6 +11,8 @@ import FilterForm from './FilterForm';
 import CreateBook from './CreateBook';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UpdateModal from './UpdateModal';
+const SERVER = process.env.REACT_APP_HEROKU_URL
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -33,7 +35,7 @@ class App extends Component {
 	 */
 	grabBooks = async () => {
 		// console.log(process.env.API_URL);
-		let URL = 'http://localhost:3001/books';
+		let URL = `${SERVER}/books`;
 		if (this.state.title !== '') {
 			URL += `?title=${this.state.title}`;
 		}
@@ -64,7 +66,7 @@ class App extends Component {
 
 	onCreate = async (newBook) => {
 		// console.log(`app.js onCreate() info: ${JSON.stringify(newBook)}`);
-		let URL = 'http://localhost:3001/books';
+		let URL = `${SERVER}/books`;
 
 		await axios
 			.post(URL, { newBook })
@@ -82,14 +84,14 @@ class App extends Component {
 
     onDelete = async (deletedBook) => {
     //   console.log(`App.js onDelete() book to be deleted: ${JSON.stringify(deletedBook)}`);
-      let URL = `http://localhost:3001/books/${deletedBook._id}`;
+      let URL = `${SERVER}/books/${deletedBook._id}`;
       await axios.delete(URL, deletedBook._id)
         .then((res) => {
         //   console.log(`server response from DELETE: ${res}`);
           const filteredBooks = this.state.books.filter((book) => {
             return book._id !== deletedBook;
           });
-          this.setState({books: filteredBooks});
+          this.setState({books: filteredBooks}, this.grabBooks);
         }).catch((err) => {
           console.error(`ERROR from DELETE: ${err}`);
         });	
@@ -100,7 +102,7 @@ class App extends Component {
 		console.log(`App.js onUpdate(), book to be updated ${JSON.stringify(bookToBeUpdated)}`);
 		console.log(`App.js onUpdate(), book after update: ${JSON.stringify(updatedBook)}`);
 		
-		let URL = `http://localhost:3001/books/${bookToBeUpdated._id}`
+		let URL = `${SERVER}/books/${bookToBeUpdated._id}`
 
 		await axios.patch(URL, updatedBook)
 		.then((res) => {
