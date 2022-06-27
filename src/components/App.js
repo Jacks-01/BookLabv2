@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UpdateModal from './UpdateModal';
 import Header from './Header';
 import { Container } from 'react-bootstrap';
-const SERVER = process.env.REACT_APP_HEROKU_URL;
+const SERVER = process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
 	constructor(props) {
@@ -35,6 +35,7 @@ class App extends Component {
 	 */
 	grabBooks = async () => {
 		let URL = `${SERVER}/books`;
+		console.log(URL)
 		if (this.state.title !== '') {
 			URL += `?title=${this.state.title}`;
 		}

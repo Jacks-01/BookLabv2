@@ -5,11 +5,11 @@ import App from './components/App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-	<Auth0Provider>
-		<React.StrictMode
-    domain='dev-ceitl5-9.us.auth0.com'
+	<Auth0Provider
+	domain='https://dev-ceitl5-9.us.auth0.com'
     clientId='OPE5cKhHEiULD1nmaQpfcCPYXoDNtUlq'
     redirectURI={window.location.origin}>
+		<React.StrictMode>
 			<App />
 		</React.StrictMode>
 	</Auth0Provider>

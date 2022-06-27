@@ -3,6 +3,7 @@ import {
 	Container,
 	Navbar
 } from 'react-bootstrap';
+import LoginButton from './Login';
 
 const Header = () => {
 	return (
@@ -11,6 +12,7 @@ const Header = () => {
 				<Container style={{display: 'flex', justifyContent: 'center'}}>
 					<h1 style={{color: 'white'}}>Book Keeper</h1>
 				</Container>
+				<LoginButton/>
 			</Navbar>
 		</>
 	);
