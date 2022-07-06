@@ -22,6 +22,7 @@ class App extends Component {
 			title: '',
 			show: false,
 			bookToBeUpdated: {},
+			isAuthenticated: false,
 		};
 	}
 
@@ -118,6 +119,7 @@ class App extends Component {
 		return (
 			<>
 				<Header />
+
 				<Router>
 					<Container style={{display: 'flex', justifyContent: 'center'}}>
 						<nav>
@@ -139,7 +141,7 @@ class App extends Component {
 						/>
 					</Routes>
 				</Router>
-				{this.state.books.length && (
+				{this.state.books.length && this.state.isAuthenticated && (
 					<BookList
 						books={this.state.books}
 						onDelete={this.onDelete}
