@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Navbar } from 'react-bootstrap';
-import LoginButton from './Login';
-import LogoutButton from './Logout';
 import Profile from './Profile';
+import AuthButton from './auth-button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Header = () => {
+	const isAuthenticated = useAuth0();
+	console.log(isAuthenticated);
 	return (
 		<>
 			<Navbar bg="dark" variant="dark">
@@ -12,8 +14,7 @@ const Header = () => {
 					<h1 style={{ color: 'white' }}>Book Keeper</h1>
 				</Container>
 				<Container style={{display: 'flex', justifyContent: 'right'}}>
-					<LoginButton />
-					<LogoutButton />
+					<AuthButton/>
 					<Profile />
 				</Container>
 			</Navbar>
