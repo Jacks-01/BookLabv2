@@ -13,7 +13,7 @@ import UpdateModal from './UpdateModal';
 import Header from './Header';
 import { Container } from 'react-bootstrap';
 import Welcome from './Welcome'
-const SERVER = process.env.REACT_APP_SERVER_URL;
+const SERVER = process.env.REACT_APP_HEROKU_URL;
 
 class App extends Component {
 	constructor(props) {
