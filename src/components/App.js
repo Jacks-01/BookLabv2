@@ -140,7 +140,7 @@ class App extends Component {
 						/>
 					</Routes>
 				</Router>
-				{this.state.books.length && this.state.isAuthenticated && (
+				{this.state.books.length && (
 					<BookList
 						books={this.state.books}
 						onDelete={this.onDelete}
