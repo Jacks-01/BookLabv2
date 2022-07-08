@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UpdateModal from './UpdateModal';
 import Header from './Header';
 import { Container } from 'react-bootstrap';
+import Welcome from './Welcome'
 const SERVER = process.env.REACT_APP_HEROKU_URL;
 
 class App extends Component {
@@ -35,6 +36,7 @@ class App extends Component {
 	 */
 	grabBooks = async () => {
 		let URL = `${SERVER}/books`;
+		console.log(URL)
 		if (this.state.title !== '') {
 			URL += `?title=${this.state.title}`;
 		}
@@ -117,6 +119,7 @@ class App extends Component {
 		return (
 			<>
 				<Header />
+
 				<Router>
 					<Container style={{display: 'flex', justifyContent: 'center'}}>
 						<nav>
@@ -138,7 +141,7 @@ class App extends Component {
 						/>
 					</Routes>
 				</Router>
-				{this.state.books.length && (
+				{this.state.books.length && this.state.isAuthenticated && (
 					<BookList
 						books={this.state.books}
 						onDelete={this.onDelete}
