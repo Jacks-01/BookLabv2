@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UpdateModal from './UpdateModal';
 import Header from './Header';
 import { Container } from 'react-bootstrap';
+import Welcome from './Welcome'
 const SERVER = process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
@@ -22,7 +23,6 @@ class App extends Component {
 			title: '',
 			show: false,
 			bookToBeUpdated: {},
-			isAuthenticated: false,
 		};
 	}
 
